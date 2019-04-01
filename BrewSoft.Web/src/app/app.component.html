@@ -1,0 +1,80 @@
+<ng-container>
+<mat-toolbar class="header" color="primary">
+    <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="drawer.toggle()"
+    *ngIf="isHandset$ | async">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>Les dépanneurs</span>
+    <span class="fill-space"></span>
+    <a href="/Beer/"><button
+    [ngClass]="{
+      'buttonMenuActif' : isBeerSelect,
+      'buttonMenu' : !isBeerSelect
+    }"
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="ClickSection('beer');">
+    <mat-icon svgIcon="beerIcon"></mat-icon>
+    </button></a>
+    <a href="/Cash/"><button
+    [ngClass]="{
+      'buttonMenuActif' : isCashSelect,
+      'buttonMenu' : !isCashSelect
+    }"
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="ClickSection('cash');">
+    <mat-icon svgIcon="cashIcon"></mat-icon>
+    </button></a>
+    <a href="/Stock/"><button
+    [ngClass]="{
+      'buttonMenuActif' : isStockSelect,
+      'buttonMenu' : !isStockSelect
+    }"
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="ClickSection('stock');">
+    <mat-icon svgIcon="stockIcon"></mat-icon>
+    </button></a>
+    <a href="/Setting/"><button
+    [ngClass]="{
+      'buttonMenuActif' : isSettingSelect,
+      'buttonMenu' : !isSettingSelect
+    }"
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="ClickSection('setting');">
+    <mat-icon svgIcon="settingIcon"></mat-icon>
+    </button></a>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="!(isHandset$ | async)">
+      <mat-nav-list>
+        <a mat-list-item *ngIf="isBeerSelect" href="/Beer/Brassin">Brassins</a>
+        <a mat-list-item *ngIf="isBeerSelect" href="/Beer/Biere">bières</a>
+        <a mat-list-item *ngIf="isBeerSelect" href="/Beer/TypeBiere">Types de bières</a>
+        <a mat-list-item *ngIf="isStockSelect" href="/Stock/Materiel">Matériels</a>
+        <a mat-list-item *ngIf="isStockSelect" href="/Stock/Ingrédient">Ingrédients</a>
+        <a mat-list-item *ngIf="isCashSelect" href="/Cash/Achats">Achats</a>
+        <a mat-list-item *ngIf="isCashSelect" href="/Cash/Ventes">Ventes</a>
+        <a mat-list-item *ngIf="isSettingSelect" href="/Setting/Brasseur">Brasseurs</a>
+        <a mat-list-item *ngIf="isSettingSelect" href="/Setting/Contact">Contacts</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-toolbar color="primary" class="footer"></mat-toolbar>
+</ng-container>
