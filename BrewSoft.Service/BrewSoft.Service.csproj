@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BrewSoft.Domain\BrewSoft.Domain.csproj" />
+    <ProjectReference Include="..\BrewSoft.Infrastructure\BrewSoft.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

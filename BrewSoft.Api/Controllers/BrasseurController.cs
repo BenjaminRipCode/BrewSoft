@@ -1,36 +1,103 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using BrewSoft.Domain.Entities;
+using BrewSoft.Domain.Interfaces;
+using BrewSoft.Service.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrewSoft.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class BrasseurController : Controller
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IService<Brasseur> _service;
+
+        public BrasseurController(IService<Brasseur> service)
         {
-            return new string[] { "value1", "value2" };
+            _service = service;
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Post([FromBody] Brasseur item)
         {
-            return "value";
+            try
+            {
+                _service.Post<BrasseurValidator>(item);
+
+                return new ObjectResult(item.Id);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
-        [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Put([FromBody] Brasseur item)
         {
+            try
+            {
+                _service.Put<BrasseurValidator>(item);
+
+                return new ObjectResult(item);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _service.Delete(id);
+
+                return new NoContentResult();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        
+        [Route("api/brasseurs")]
+        public IActionResult Get()
+        {
+            try
+            {
+                return new ObjectResult(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Route("api/brasseur/{id}")]
+        public IActionResult Get(int id)
         {
+            try
+            {
+                return new ObjectResult(_service.Get(id));
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
