@@ -1,9 +1,11 @@
 .buttonMenuActif {
     background-color: red;
+    fill:#111;
 }
 
-.buttonMenu:hover {
-    background-color: red;
+.buttonMenu svg:hover {
+    color: black;
+    fill:#111;
 }
 
 .sidenav-container {

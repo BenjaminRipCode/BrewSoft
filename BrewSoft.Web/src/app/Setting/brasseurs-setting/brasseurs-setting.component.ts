@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import { BrasseurDataSource } from './brasseur-datasource';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BrasseurService } from '../../Services/brasseur.service';
 
 @Component({
   selector: 'app-brasseurs-setting',
@@ -8,16 +8,19 @@ import { BrasseurDataSource } from './brasseur-datasource';
   styleUrls: ['./brasseurs-setting.component.scss']
 })
 export class BrasseursSettingComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  dataSource: BrasseurDataSource;
+  brasseurs: any = [];
 
-  displayedColumns = ['id', 'name'];
-
-  constructor() { }
+  constructor(public brasseurService: BrasseurService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.dataSource = new BrasseurDataSource(this.paginator, this.sort);
+    this.getBrasseurs();
   }
 
+  getBrasseurs() {
+    this.brasseurs = [];
+    this.brasseurService.get().subscribe((data: {}) => {
+      console.log(data);
+      this.brasseurs = data;
+    });
+  }
 }
